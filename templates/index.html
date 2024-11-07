@@ -1,0 +1,20 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Student Management</title>
+</head>
+<center><body style="background-color: bisque;">
+    <h1>Student List</h1>
+    <button><a href="{{ url_for('add_student') }}">Add Student</a></button>
+    <ul>
+        {% for student in students %}
+            <li>{{ student.name }} - {{ student.grade }} - <a href="{{ url_for('edit_student', id=student.id) }}">Edit</a> |
+                <form action="{{ url_for('delete_student', id=student.id) }}" method="post" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body></center>
+</html>
