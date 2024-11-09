@@ -1,14 +1,10 @@
-# app.py
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
-# Initialize Flask app
-app = Flask(__name__)
+app = Flask(_name_)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'supersecretkey'
-
-# Initialize SQLAlchemy
 db = SQLAlchemy(app)
 
 # Database Model for Student
@@ -19,8 +15,17 @@ class Student(db.Model):
     grade = db.Column(db.String(10), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
 
-    def __repr__(self):
+    def _repr_(self):
         return f"<Student {self.name}>"
+
+# Function to create database tables
+def create_tables():
+    with app.app_context():
+        db.create_all()
+        print("Database tables created successfully.")
+
+# Call the create_tables function to ensure tables are created
+create_tables()
 
 # Route to view all students
 @app.route('/')
@@ -66,5 +71,5 @@ def delete_student(id):
     flash("Student deleted successfully!", "success")
     return redirect(url_for('index'))
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if _name_ == '_main_':
+    app.run(debug=True, host='0.0.0.0', port=5000)
